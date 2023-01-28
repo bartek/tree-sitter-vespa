@@ -13,7 +13,10 @@ module.exports = grammar({
         'type',
         $._field_types,
         '{',
-        $._field_properties,
+        optional(seq(
+          $._field_properties,
+          repeat(seq(terminator, $._field_properties)),
+        )),
         '}',
     ),
 

@@ -1,8 +1,21 @@
-=====
-Field
-=====
+==================
+Field Without Body
+===================
+
+field bodytext type string {}
+
+---
+
+(field
+    (field_name)
+    (string_type))
+
+===============
+Field With Body
+===============
 
 field bodytext type int {
+    indexing: index
 }
 
 ---
