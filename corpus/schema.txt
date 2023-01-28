@@ -1,0 +1,11 @@
+=================
+Schema Definition
+=================
+
+schema testdoc {}
+---
+
+(schema_file
+  (schema_declaration
+    (identifier)
+    (block)))

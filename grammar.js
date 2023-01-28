@@ -10,6 +10,16 @@ module.exports = grammar({
   name: 'vespa',
 
   rules: {
+    schema_file: $ => repeat(choice(
+      seq($.schema_declaration, optional(terminator)),
+    )),
+
+    schema_declaration: $ => seq(
+        'schema',
+        field('name', $.identifier),
+        field('body', optional($.block)),
+    ),
+
     field_declaration: $ => seq(
         'field',
         field('name', $.identifier),
@@ -41,14 +51,18 @@ module.exports = grammar({
      seq(
        $._statement,
        repeat(seq(terminator, $._statement)),
+       optional(seq(
+         terminator,
+         optional($.empty_statement),
+       )),
      ),
     ),
 
-    _statement: $ => choice(
-        $.empty_statement,
-        $.block,
-    ),
-
     empty_statement: $ => '',
+
+    _statement: $ => choice(
+        $.block,
+        $.field_declaration,
+    ),
   }
 });

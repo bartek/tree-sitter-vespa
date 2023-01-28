@@ -2,11 +2,17 @@
 Field Without Body
 ===================
 
-field bodytext type string {}
+schema testdoc {
+    field bodytext type string {}
+}
 ---
 
-(field_declaration
+(schema_file
+  (schema_declaration
     (identifier)
-    (string_type)
     (block
-        (empty_statement)))
+      (field_declaration
+          (identifier)
+          (string_type)
+          (block))
+      (empty_statement))))
