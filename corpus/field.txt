@@ -3,23 +3,10 @@ Field Without Body
 ===================
 
 field bodytext type string {}
-
 ---
 
-(field
-    (field_name)
-    (string_type))
-
-===============
-Field With Body
-===============
-
-field bodytext type int {
-    indexing: index
-}
-
----
-
-(field
-    (field_name)
-    (int_type))
+(field_declaration
+    (identifier)
+    (string_type)
+    (block
+        (empty_statement)))

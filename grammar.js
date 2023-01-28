@@ -1,5 +1,8 @@
 const 
-  newline = '\n'
+  unicodeLetter = /\p{L}/,
+  unicodeDigit = /[0-9]/,
+  letter = choice(unicodeLetter, '_'),
+  newline = '\n',
   terminator = choice(newline, ';')
 
 
@@ -7,24 +10,18 @@ module.exports = grammar({
   name: 'vespa',
 
   rules: {
-    field: $ => seq(
+    field_declaration: $ => seq(
         'field',
-        $.field_name,
+        field('name', $.identifier),
         'type',
         $._field_types,
-        '{',
-        optional(seq(
-          $._field_properties,
-          repeat(seq(terminator, $._field_properties)),
-        )),
-        '}',
+        field('body', optional($.block)),
     ),
 
-    field_name: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
-
-    _field_properties: $ => seq(
-        terminator,
-    ),
+    identifier: $ => token(seq(
+      letter,
+      repeat(choice(letter, unicodeDigit))
+    )),
 
     _field_types: $ => choice(
         $.string_type,
@@ -33,5 +30,25 @@ module.exports = grammar({
 
     int_type: $ => 'int',
     string_type: $ => 'string',
+
+    block: $ => seq(
+      '{',
+      optional($._statement_list),
+      '}',
+    ),
+
+    _statement_list: $ => choice(
+     seq(
+       $._statement,
+       repeat(seq(terminator, $._statement)),
+     ),
+    ),
+
+    _statement: $ => choice(
+        $.empty_statement,
+        $.block,
+    ),
+
+    empty_statement: $ => '',
   }
 });
