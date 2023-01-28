@@ -112,6 +112,10 @@
     "named": false
   },
   {
+    "type": "comment",
+    "named": true
+  },
+  {
     "type": "empty_statement",
     "named": true
   },

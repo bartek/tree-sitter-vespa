@@ -9,6 +9,11 @@ const
 module.exports = grammar({
   name: 'vespa',
 
+  extras: $ => [
+    $.comment,
+    /\s/
+  ],
+
   rules: {
     schema_file: $ => repeat(choice(
       seq($.schema_declaration, optional(terminator)),
@@ -64,5 +69,7 @@ module.exports = grammar({
         $.block,
         $.field_declaration,
     ),
+
+    comment: $ => token(seq('#', /.*/)),
   }
 });

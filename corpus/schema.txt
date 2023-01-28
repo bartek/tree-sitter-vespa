@@ -9,3 +9,17 @@ schema testdoc {}
   (schema_declaration
     (identifier)
     (block)))
+
+===============
+Comment at top
+===============
+
+# This is a comment
+schema testdoc {}
+---
+
+(schema_file
+  (comment)
+  (schema_declaration
+    (identifier)
+    (block)))
