@@ -25,12 +25,15 @@ module.exports = grammar({
         field('body', optional($.block)),
     ),
 
+    // TODO:
+    // Fields can be declared outside the document block, in the schema
+    // Need to add the optional document block first
     field_declaration: $ => seq(
         'field',
         field('name', $.identifier),
         'type',
         $._field_types,
-        field('body', optional($.block)),
+        field('body', optional($.block)), // Body can also be one line, name : body
     ),
 
     identifier: $ => token(seq(
@@ -52,6 +55,16 @@ module.exports = grammar({
       '}',
     ),
 
+    field_body: $ => seq(
+      field('name', $.identifier),
+      ':',
+      field('arguments', optional($.field_arguments)),
+    ),
+
+    field_arguments: $ => seq(
+      pipeSep($.identifier),
+    ),
+
     _statement_list: $ => choice(
      seq(
        $._statement,
@@ -68,8 +81,13 @@ module.exports = grammar({
     _statement: $ => choice(
         $.block,
         $.field_declaration,
+        $.field_body,
     ),
 
     comment: $ => token(seq('#', /.*/)),
   }
 });
+
+function pipeSep(rule) {
+  return seq(rule, repeat(seq('|', rule)))
+}

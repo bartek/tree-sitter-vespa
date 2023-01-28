@@ -16,3 +16,30 @@ schema testdoc {
           (string_type)
           (block))
       (empty_statement))))
+
+==================
+Field Declarations
+===================
+
+schema testdoc {
+    field bodytext type string {
+        indexing: summary | index
+    }
+}
+---
+
+(schema_file
+  (schema_declaration
+    (identifier)
+    (block
+      (field_declaration
+          (identifier)
+          (string_type)
+          (block
+            (field_body
+              (identifier)
+              (field_arguments
+                (identifier)
+                (identifier)))
+            (empty_statement)))
+        (empty_statement))))
