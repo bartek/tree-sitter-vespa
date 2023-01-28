@@ -1,0 +1,12 @@
+=====
+Field
+=====
+
+field bodytext type int {
+}
+
+---
+
+(field
+    (field_name)
+    (int_type))
