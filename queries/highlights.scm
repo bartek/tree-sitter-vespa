@@ -1,4 +1,10 @@
+[
+  (map_type)
+] @type
+
 ; Declarations
+
+
 
 (field_declaration
   name: (identifier) @type)
@@ -9,3 +15,8 @@
 
 [ "|" ":" ] @operator
 (comment) @comment
+
+[
+  "{"
+  "}"
+]  @punctuation.bracket

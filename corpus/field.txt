@@ -13,8 +13,7 @@ schema testdoc {
     (block
       (field_declaration
           (identifier)
-          (string_type)
-          (block))
+          (element_declaration_list))
       (empty_statement))))
 
 ==================
@@ -37,12 +36,15 @@ schema testdoc {
       (comment)
       (field_declaration
           (identifier)
-          (string_type)
-          (block
-            (field_element
+          (element_declaration_list
+            (element
               (identifier)
               (field_arguments
                 (identifier)
                 (identifier)))
-            (empty_statement)))
+            (element
+              (identifier)
+              (identifier)
+              (field_arguments
+                (identifier)))))
         (empty_statement))))

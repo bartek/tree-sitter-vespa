@@ -1,7 +1,7 @@
 const 
   unicodeLetter = /\p{L}/,
   unicodeDigit = /[0-9]/,
-  letter = choice(unicodeLetter, '_'),
+  letter = choice(unicodeLetter, '_', '-'),
   newline = '\n',
   terminator = choice(newline, ';')
 
@@ -28,18 +28,14 @@ module.exports = grammar({
     // TODO:
     // Fields can be declared outside the document block, in the schema
     // Need to add the optional document block first
+    // field = ["repeated"] fieldName type { [ "[" elementDeclarations "]" ] ";"
     field_declaration: $ => seq(
         'field',
         field('name', $.identifier),
         'type',
         $._field_types,
-        field('body', optional($.block)), // Body can also be one line, name : body
+        $.element_declaration_list,
     ),
-
-    // NEXT:
-    // https://docs.vespa.ai/en/reference/schema-reference.html#attribute
-    // Get two field elements working
-    // Note that attribute can be one line or defined with a block
 
     identifier: $ => token(seq(
       letter,
@@ -47,12 +43,64 @@ module.exports = grammar({
     )),
 
     _field_types: $ => choice(
-        $.string_type,
-        $.int_type
+        $.array_type,
+        $.weighted_set_type,
+        'bool',
+        'byte',
+        'double',
+        'float',
+        'int',
+        'long',
+        'position',
+        'predicate',
+        'raw',
+        'string',
+        'structname',
+        $.map_type,
+        'uri',
+        $.reference_type,
     ),
 
-    int_type: $ => 'int',
-    string_type: $ => 'string',
+    reference_type: $ => seq(
+      'reference',
+      '<',
+      $.identifier,
+      '>',
+    ),
+
+    map_type: $ => seq(
+      'map',
+      '<',
+      $.identifier,
+      ',',
+      $.identifier,
+      '>',
+    ),
+
+    weighted_set_type: $ => seq(
+      'weightedset',
+      '<',
+      $.identifier,
+      '>',
+    ),
+
+    array_type: $ => seq(
+      'array',
+      '<',
+      $.identifier,
+      '>',
+    ),
+
+    element_declaration_list: $ => seq(
+      '{',
+        optional(seq(
+        $.element,
+        repeat(seq(terminator, $.element)),
+        optional(terminator)
+        )),
+      '}',
+    ),
+
 
     block: $ => seq(
       '{',
@@ -60,8 +108,9 @@ module.exports = grammar({
       '}',
     ),
 
-    field_element: $ => seq(
-      field('name', $.identifier),
+    element: $ => seq(
+      field('identifier', $.identifier),
+      optional(field('name', $.identifier)),
       ':',
       field('arguments', optional($.field_arguments)),
     ),
@@ -86,7 +135,7 @@ module.exports = grammar({
     _statement: $ => choice(
         $.block,
         $.field_declaration,
-        $.field_element,
+        $.element,
     ),
 
     comment: $ => token(seq('#', /.*/)),
