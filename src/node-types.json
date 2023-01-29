@@ -16,11 +16,11 @@
           "named": true
         },
         {
-          "type": "field_body",
+          "type": "field_declaration",
           "named": true
         },
         {
-          "type": "field_declaration",
+          "type": "field_element",
           "named": true
         }
       ]
@@ -39,32 +39,6 @@
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "field_body",
-    "named": true,
-    "fields": {
-      "arguments": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "field_arguments",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -105,6 +79,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "field_element",
+    "named": true,
+    "fields": {
+      "arguments": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "field_arguments",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {

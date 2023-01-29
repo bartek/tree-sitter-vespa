@@ -36,6 +36,11 @@ module.exports = grammar({
         field('body', optional($.block)), // Body can also be one line, name : body
     ),
 
+    // NEXT:
+    // https://docs.vespa.ai/en/reference/schema-reference.html#attribute
+    // Get two field elements working
+    // Note that attribute can be one line or defined with a block
+
     identifier: $ => token(seq(
       letter,
       repeat(choice(letter, unicodeDigit))
@@ -55,7 +60,7 @@ module.exports = grammar({
       '}',
     ),
 
-    field_body: $ => seq(
+    field_element: $ => seq(
       field('name', $.identifier),
       ':',
       field('arguments', optional($.field_arguments)),
@@ -81,7 +86,7 @@ module.exports = grammar({
     _statement: $ => choice(
         $.block,
         $.field_declaration,
-        $.field_body,
+        $.field_element,
     ),
 
     comment: $ => token(seq('#', /.*/)),

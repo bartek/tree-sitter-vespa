@@ -205,7 +205,7 @@
         }
       ]
     },
-    "field_body": {
+    "field_element": {
       "type": "SEQ",
       "members": [
         {
@@ -362,7 +362,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "field_body"
+          "name": "field_element"
         }
       ]
     },

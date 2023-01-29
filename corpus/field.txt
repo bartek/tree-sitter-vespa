@@ -22,8 +22,10 @@ Field Declarations
 ===================
 
 schema testdoc {
+    # Notes: A comment
     field bodytext type string {
         indexing: summary | index
+        attribute fast-search: true
     }
 }
 ---
@@ -32,11 +34,12 @@ schema testdoc {
   (schema_declaration
     (identifier)
     (block
+      (comment)
       (field_declaration
           (identifier)
           (string_type)
           (block
-            (field_body
+            (field_element
               (identifier)
               (field_arguments
                 (identifier)
