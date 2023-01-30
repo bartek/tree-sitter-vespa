@@ -10,6 +10,21 @@ schema testdoc {}
     (identifier)
     (block)))
 
+================
+Schema Inherits
+================
+
+schema testdoc inherits common {}
+---
+
+(schema_file
+  (schema_declaration
+    (identifier)
+    (identifier)
+    (block)))
+
+
+
 ===============
 Comment at top
 ===============

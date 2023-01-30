@@ -13,17 +13,19 @@ schema testdoc {
     (block
       (field_declaration
           (identifier)
-          (element_declaration_list))
-      (empty_statement))))
+          (field_type)
+          (field_body)))))
 
 ==================
 Field Declarations
 ===================
 
 schema testdoc {
+    # bodytext (required)
     # Notes: A comment
     field bodytext type string {
         indexing: summary | index
+        index: enable-bm25
         attribute fast-search: true
     }
 }
@@ -34,17 +36,94 @@ schema testdoc {
     (identifier)
     (block
       (comment)
+      (comment)
       (field_declaration
           (identifier)
-          (element_declaration_list
+          (field_type)
+          (field_body
             (element
-              (identifier)
-              (field_arguments
-                (identifier)
-                (identifier)))
+              (element_name)
+              (element_arguments
+                (argument)
+                (argument)))
             (element
-              (identifier)
-              (identifier)
-              (field_arguments
-                (identifier)))))
-        (empty_statement))))
+              (element_name)
+              (element_arguments
+                (argument)))
+            (element
+              (element_name)
+              (argument)
+              (element_arguments
+                (argument))))))))
+
+==============
+Block Elements
+==============
+
+schema testdoc {
+    field outer type map<string, string> {
+        struct-field key { indexing: attribute }
+        struct-field value { indexing: attribute }
+    }
+}
+---
+
+(schema_file
+  (schema_declaration
+    (identifier)
+    (block
+      (field_declaration
+        (identifier)
+        (field_type
+          (map_type
+            (identifier)
+            (identifier)))
+        (field_body
+          (element
+            (element_name)
+            (argument)
+            (element
+              (element_name)
+              (element_arguments
+                (argument))))
+          (element
+            (element_name)
+            (argument)
+            (element
+              (element_name)
+              (element_arguments
+                (argument)))))))))
+
+===========
+Field Types
+===========
+
+schema testdoc {
+    field embedding type tensor<float>(x[384]) {}
+    field embedding2 type tensor<int8>(x{}, y{}) {}
+}
+---
+
+(schema_file
+   (schema_declaration
+     (identifier)
+     (block
+       (field_declaration
+         (identifier)
+         (field_type
+           (tensor_type
+             (tensor_value_type)
+             (tensor_dimension
+               (dimension_name)
+               (int_lit))))
+         (field_body))
+       (field_declaration
+         (identifier)
+         (field_type
+           (tensor_type
+             (tensor_value_type)
+             (tensor_dimension
+               (dimension_name))
+             (tensor_dimension
+               (dimension_name))))
+         (field_body)))))

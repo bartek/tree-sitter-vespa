@@ -31,10 +31,6 @@
           "named": true
         },
         {
-          "type": "empty_statement",
-          "named": true
-        },
-        {
           "type": "field_declaration",
           "named": true
         }
@@ -45,40 +41,73 @@
     "type": "element",
     "named": true,
     "fields": {
+      "argument": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      },
       "arguments": {
         "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "field_arguments",
-            "named": true
-          }
-        ]
-      },
-      "identifier": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
+            "type": "element_arguments",
             "named": true
           }
         ]
       },
       "name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "element_name",
             "named": true
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "element",
+          "named": true
+        },
+        {
+          "type": "field_declaration",
+          "named": true
+        }
+      ]
     }
   },
   {
-    "type": "element_declaration_list",
+    "type": "element_arguments",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "argument",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "field_body",
     "named": true,
     "fields": {},
     "children": {
@@ -87,21 +116,6 @@
       "types": [
         {
           "type": "element",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "field_arguments",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -127,11 +141,26 @@
       "required": true,
       "types": [
         {
-          "type": "array_type",
+          "type": "field_body",
           "named": true
         },
         {
-          "type": "element_declaration_list",
+          "type": "field_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "field_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "array_type",
           "named": true
         },
         {
@@ -140,6 +169,10 @@
         },
         {
           "type": "reference_type",
+          "named": true
+        },
+        {
+          "type": "tensor_type",
           "named": true
         },
         {
@@ -203,6 +236,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -221,6 +264,49 @@
     }
   },
   {
+    "type": "tensor_dimension",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "dimension_name",
+          "named": true
+        },
+        {
+          "type": "int_lit",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tensor_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "tensor_dimension",
+          "named": true
+        },
+        {
+          "type": "tensor_value_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tensor_value_type",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "weighted_set_type",
     "named": true,
     "fields": {},
@@ -237,6 +323,14 @@
   },
   {
     "type": "\n",
+    "named": false
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
     "named": false
   },
   {
@@ -260,7 +354,23 @@
     "named": false
   },
   {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
+  },
+  {
+    "type": "argument",
+    "named": true
+  },
+  {
     "type": "array",
+    "named": false
+  },
+  {
+    "type": "bfloat16",
     "named": false
   },
   {
@@ -276,11 +386,15 @@
     "named": true
   },
   {
+    "type": "dimension_name",
+    "named": true
+  },
+  {
     "type": "double",
     "named": false
   },
   {
-    "type": "empty_statement",
+    "type": "element_name",
     "named": true
   },
   {
@@ -296,8 +410,20 @@
     "named": true
   },
   {
+    "type": "inherits",
+    "named": false
+  },
+  {
     "type": "int",
     "named": false
+  },
+  {
+    "type": "int8",
+    "named": false
+  },
+  {
+    "type": "int_lit",
+    "named": true
   },
   {
     "type": "long",
@@ -336,6 +462,10 @@
     "named": false
   },
   {
+    "type": "tensor",
+    "named": false
+  },
+  {
     "type": "type",
     "named": false
   },
@@ -349,6 +479,10 @@
   },
   {
     "type": "{",
+    "named": false
+  },
+  {
+    "type": "{}",
     "named": false
   },
   {

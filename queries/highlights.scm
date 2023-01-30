@@ -1,17 +1,15 @@
-[
-  (map_type)
-] @type
-
 ; Declarations
 
 
+(element
+  name: (element_name) @type
+  argument: (argument) @string)
 
-(field_declaration
-  name: (identifier) @type)
+[
+  (field_type)
+] @type
 
-; Identifiers
-(identifier) @variable
-
+(identifier) @string
 
 [ "|" ":" ] @operator
 (comment) @comment

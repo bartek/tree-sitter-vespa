@@ -22,6 +22,10 @@ module.exports = grammar({
     schema_declaration: $ => seq(
         'schema',
         field('name', $.identifier),
+        optional(seq(
+            'inherits',
+            $.identifier,
+        )),
         field('body', optional($.block)),
     ),
 
@@ -33,8 +37,8 @@ module.exports = grammar({
         'field',
         field('name', $.identifier),
         'type',
-        $._field_types,
-        $.element_declaration_list,
+        $.field_type,
+        $.field_body,
     ),
 
     identifier: $ => token(seq(
@@ -42,7 +46,7 @@ module.exports = grammar({
       repeat(choice(letter, unicodeDigit))
     )),
 
-    _field_types: $ => choice(
+    field_type: $ => choice(
         $.array_type,
         $.weighted_set_type,
         'bool',
@@ -57,6 +61,7 @@ module.exports = grammar({
         'string',
         'structname',
         $.map_type,
+        $.tensor_type,
         'uri',
         $.reference_type,
     ),
@@ -77,6 +82,35 @@ module.exports = grammar({
       '>',
     ),
 
+    tensor_value_type: $ => choice(
+        'float',
+        'double',
+        'int8',
+        'bfloat16',
+    ),
+
+    tensor_type: $ => seq(
+        'tensor',
+        '<',
+        $.tensor_value_type,
+        '>',
+        '(',
+        commaSep($.tensor_dimension),
+        ')',
+    ),
+
+    tensor_dimension: $ => seq(
+        alias($.identifier, $.dimension_name),
+        choice(
+          '{}',
+          seq(
+            '[',
+            $.int_lit,
+            ']',
+          ),
+        ),
+    ),
+
     weighted_set_type: $ => seq(
       'weightedset',
       '<',
@@ -91,7 +125,7 @@ module.exports = grammar({
       '>',
     ),
 
-    element_declaration_list: $ => seq(
+    field_body: $ => seq(
       '{',
         optional(seq(
         $.element,
@@ -109,14 +143,21 @@ module.exports = grammar({
     ),
 
     element: $ => seq(
-      field('identifier', $.identifier),
-      optional(field('name', $.identifier)),
-      ':',
-      field('arguments', optional($.field_arguments)),
+      field('name', alias($.identifier, $.element_name)),
+      optional(field('argument', alias($.identifier, $.argument))),
+      choice(
+        ':',
+        seq(
+          '{',
+          optional($._statement_list),
+          '}',
+        ),
+      ),
+      field('arguments', optional($.element_arguments)),
     ),
 
-    field_arguments: $ => seq(
-      pipeSep($.identifier),
+    element_arguments: $ => seq(
+      pipeSep(alias($.identifier, $.argument)),
     ),
 
     _statement_list: $ => choice(
@@ -125,12 +166,9 @@ module.exports = grammar({
        repeat(seq(terminator, $._statement)),
        optional(seq(
          terminator,
-         optional($.empty_statement),
        )),
      ),
     ),
-
-    empty_statement: $ => '',
 
     _statement: $ => choice(
         $.block,
@@ -138,10 +176,19 @@ module.exports = grammar({
         $.element,
     ),
 
+    int_lit: $ => token(seq(
+      /[1-9]/,
+      repeat(unicodeDigit),
+    )),
+
     comment: $ => token(seq('#', /.*/)),
   }
 });
 
 function pipeSep(rule) {
   return seq(rule, repeat(seq('|', rule)))
+}
+
+function commaSep(rule) {
+    return seq(rule, repeat(seq(',', rule)))
 }

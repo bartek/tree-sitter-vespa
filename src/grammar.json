@@ -55,6 +55,27 @@
           }
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "inherits"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "FIELD",
           "name": "body",
           "content": {
@@ -93,11 +114,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_field_types"
+          "name": "field_type"
         },
         {
           "type": "SYMBOL",
-          "name": "element_declaration_list"
+          "name": "field_body"
         }
       ]
     },
@@ -155,7 +176,7 @@
         ]
       }
     },
-    "_field_types": {
+    "field_type": {
       "type": "CHOICE",
       "members": [
         {
@@ -213,6 +234,10 @@
         {
           "type": "SYMBOL",
           "name": "map_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "tensor_type"
         },
         {
           "type": "STRING",
@@ -274,6 +299,121 @@
         }
       ]
     },
+    "tensor_value_type": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "float"
+        },
+        {
+          "type": "STRING",
+          "value": "double"
+        },
+        {
+          "type": "STRING",
+          "value": "int8"
+        },
+        {
+          "type": "STRING",
+          "value": "bfloat16"
+        }
+      ]
+    },
+    "tensor_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "tensor"
+        },
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "tensor_value_type"
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "tensor_dimension"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "tensor_dimension"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "tensor_dimension": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          "named": true,
+          "value": "dimension_name"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "{}"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "["
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "int_lit"
+                },
+                {
+                  "type": "STRING",
+                  "value": "]"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "weighted_set_type": {
       "type": "SEQ",
       "members": [
@@ -316,7 +456,7 @@
         }
       ]
     },
-    "element_declaration_list": {
+    "field_body": {
       "type": "SEQ",
       "members": [
         {
@@ -422,10 +562,15 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "identifier",
+          "name": "name",
           "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            "named": true,
+            "value": "element_name"
           }
         },
         {
@@ -433,10 +578,15 @@
           "members": [
             {
               "type": "FIELD",
-              "name": "name",
+              "name": "argument",
               "content": {
-                "type": "SYMBOL",
-                "name": "identifier"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                "named": true,
+                "value": "argument"
               }
             },
             {
@@ -445,8 +595,38 @@
           ]
         },
         {
-          "type": "STRING",
-          "value": ":"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ":"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "{"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_statement_list"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
+                {
+                  "type": "STRING",
+                  "value": "}"
+                }
+              ]
+            }
+          ]
         },
         {
           "type": "FIELD",
@@ -456,7 +636,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "field_arguments"
+                "name": "element_arguments"
               },
               {
                 "type": "BLANK"
@@ -466,15 +646,20 @@
         }
       ]
     },
-    "field_arguments": {
+    "element_arguments": {
       "type": "SEQ",
       "members": [
         {
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "identifier"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              "named": true,
+              "value": "argument"
             },
             {
               "type": "REPEAT",
@@ -486,8 +671,13 @@
                     "value": "|"
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "identifier"
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "identifier"
+                    },
+                    "named": true,
+                    "value": "argument"
                   }
                 ]
               }
@@ -549,18 +739,6 @@
                           "value": ";"
                         }
                       ]
-                    },
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "empty_statement"
-                        },
-                        {
-                          "type": "BLANK"
-                        }
-                      ]
                     }
                   ]
                 },
@@ -572,10 +750,6 @@
           ]
         }
       ]
-    },
-    "empty_statement": {
-      "type": "STRING",
-      "value": ""
     },
     "_statement": {
       "type": "CHOICE",
@@ -593,6 +767,25 @@
           "name": "element"
         }
       ]
+    },
+    "int_lit": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[1-9]"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "PATTERN",
+              "value": "[0-9]"
+            }
+          }
+        ]
+      }
     },
     "comment": {
       "type": "TOKEN",
