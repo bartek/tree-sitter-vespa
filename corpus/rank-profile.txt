@@ -1,0 +1,54 @@
+============
+Rank Profile
+============
+
+schema testdoc {
+    rank-profile lynx {
+        weight title: 200
+        weight bodytext: 200
+        weight comments: 200
+    }
+}
+---
+
+(schema_file
+    (schema_declaration
+    (identifier)
+    (block
+        (rank_profile
+        (identifier)
+        (block
+            (element
+            (element_name)
+            (argument)
+            (element_arguments
+                (int_literal)))
+            (element
+            (element_name)
+            (argument)
+            (element_arguments
+                (int_literal)))
+            (element
+            (element_name)
+            (argument)
+            (element_arguments
+                (int_literal))))))))
+
+=====================
+Rank Profile Inherits
+=====================
+
+schema testdoc {
+    rank-profile lynx inherits rank-profile1, rank-profile2 {}
+}
+---
+
+(schema_file
+    (schema_declaration
+    (identifier)
+    (block
+        (rank_profile
+        (identifier)
+        (identifier)
+        (identifier)
+        (block)))))

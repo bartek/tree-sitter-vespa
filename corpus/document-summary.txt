@@ -1,0 +1,30 @@
+================
+Document Summary
+================
+
+schema testdoc {
+    document-summary inner inherits outer {
+        summary id type string {}
+        summary readers type array<string> {}
+    }
+}
+---
+
+(schema_file
+    (schema_declaration
+    (identifier)
+    (block
+        (document_summary
+        (identifier)
+        (identifier)
+        (block
+            (summary_declaration
+            (identifier)
+            (field_type)
+            (field_body))
+            (summary_declaration
+            (identifier)
+            (field_type
+                (array_type
+                (identifier)))
+            (field_body)))))))
