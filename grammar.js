@@ -29,16 +29,30 @@ module.exports = grammar({
         field('body', optional($.block)),
     ),
 
-    // TODO:
-    // Fields can be declared outside the document block, in the schema
-    // Need to add the optional document block first
-    // field = ["repeated"] fieldName type { [ "[" elementDeclarations "]" ] ";"
     field_declaration: $ => seq(
         'field',
         field('name', $.identifier),
         'type',
         $.field_type,
         $.field_body,
+    ),
+
+    summary_declaration: $ => seq(
+        'summary',
+        field('name', $.identifier),
+        'type',
+        $.field_type,
+        $.field_body,
+    ),
+
+    document_summary: $ => seq(
+        'document-summary',
+        field('name', $.identifier),
+        optional(seq(
+            'inherits',
+            $.identifier,
+        )),
+        field('body', optional($.block)),
     ),
 
     identifier: $ => token(seq(
@@ -125,6 +139,7 @@ module.exports = grammar({
       '>',
     ),
 
+    // TODO: Should rename as its shared by field, document-summary, and struct-field?
     field_body: $ => seq(
       '{',
         optional(seq(
@@ -173,7 +188,9 @@ module.exports = grammar({
     _statement: $ => choice(
         $.block,
         $.field_declaration,
+        $.summary_declaration,
         $.element,
+        $.document_summary,
     ),
 
     int_lit: $ => token(seq(

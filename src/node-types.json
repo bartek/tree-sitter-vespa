@@ -27,11 +27,55 @@
           "named": true
         },
         {
+          "type": "document_summary",
+          "named": true
+        },
+        {
           "type": "element",
           "named": true
         },
         {
           "type": "field_declaration",
+          "named": true
+        },
+        {
+          "type": "summary_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "document_summary",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -81,11 +125,19 @@
           "named": true
         },
         {
+          "type": "document_summary",
+          "named": true
+        },
+        {
           "type": "element",
           "named": true
         },
         {
           "type": "field_declaration",
+          "named": true
+        },
+        {
+          "type": "summary_declaration",
           "named": true
         }
       ]
@@ -264,6 +316,36 @@
     }
   },
   {
+    "type": "summary_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "field_body",
+          "named": true
+        },
+        {
+          "type": "field_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "tensor_dimension",
     "named": true,
     "fields": {},
@@ -390,6 +472,10 @@
     "named": true
   },
   {
+    "type": "document-summary",
+    "named": false
+  },
+  {
     "type": "double",
     "named": false
   },
@@ -459,6 +545,10 @@
   },
   {
     "type": "structname",
+    "named": false
+  },
+  {
+    "type": "summary",
     "named": false
   },
   {
