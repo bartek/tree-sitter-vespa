@@ -6,6 +6,10 @@
 ] @function.method
 
 [
+  (field_type)
+] @type
+
+[
   (int_literal)
 ] @number
 
