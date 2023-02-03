@@ -24,7 +24,19 @@ parser_config.vespa = {
 }
 ```
 
-Then while running neovim, run `:TSInstall vespa`
+Additionally, you'll need to manually [add
+queries](https://github.com/nvim-treesitter/nvim-treesitter#adding-queries).
+This is a result of this grammar not yet being officially supported. For example, if tree-sitter was installed via packer you may do something like:
+
+```
+    cd ~~/.local/share/nvim/site/pack/packer/start/nvim-treesitter/queries
+    mkdir vespa
+    ln -s ~/workspace/tree-sitter-vespa/queries/* .
+```
+
+Then while running neovim, run `:TSInstall vespa`. You can validate the grammar
+is correctly installed by running `:TSModuleInfo` and searching for `vespa`.
+Both highlighting and incremental selection should be checked.
 
 ## Development
 

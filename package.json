@@ -10,7 +10,7 @@
   },
   "tree-sitter": [
     {
-      "scope": "source.sd",
+      "scope": "source.vespa",
       "file-types": [
         "sd"
       ]
