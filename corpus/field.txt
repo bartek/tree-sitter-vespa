@@ -44,17 +44,17 @@ schema testdoc {
             (element
               (element_name)
               (element_arguments
-                (argument)
-                (argument)))
+                (identifier)
+                (identifier)))
             (element
               (element_name)
               (element_arguments
-                (argument)))
+                (identifier)))
             (element
               (element_name)
               (argument)
               (element_arguments
-                (argument))))))))
+                (identifier))))))))
 
 ==============
 Block Elements
@@ -85,14 +85,14 @@ schema testdoc {
             (element
               (element_name)
               (element_arguments
-                (argument))))
+                (identifier))))
           (element
             (element_name)
             (argument)
             (element
               (element_name)
               (element_arguments
-                (argument)))))))))
+                (identifier)))))))))
 
 ===========
 Field Types
@@ -115,7 +115,7 @@ schema testdoc {
              (tensor_value_type)
              (tensor_dimension
                (dimension_name)
-               (int_lit))))
+               (int_literal))))
          (field_body))
        (field_declaration
          (identifier)

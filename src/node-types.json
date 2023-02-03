@@ -39,6 +39,10 @@
           "named": true
         },
         {
+          "type": "rank_profile",
+          "named": true
+        },
+        {
           "type": "summary_declaration",
           "named": true
         }
@@ -137,6 +141,10 @@
           "named": true
         },
         {
+          "type": "rank_profile",
+          "named": true
+        },
+        {
           "type": "summary_declaration",
           "named": true
         }
@@ -152,7 +160,11 @@
       "required": true,
       "types": [
         {
-          "type": "argument",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "int_literal",
           "named": true
         }
       ]
@@ -241,6 +253,42 @@
     "children": {
       "multiple": true,
       "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "rank_profile",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
       "types": [
         {
           "type": "identifier",
@@ -358,7 +406,7 @@
           "named": true
         },
         {
-          "type": "int_lit",
+          "type": "int_literal",
           "named": true
         }
       ]
@@ -508,7 +556,7 @@
     "named": false
   },
   {
-    "type": "int_lit",
+    "type": "int_literal",
     "named": true
   },
   {
@@ -525,6 +573,10 @@
   },
   {
     "type": "predicate",
+    "named": false
+  },
+  {
+    "type": "rank-profile",
     "named": false
   },
   {

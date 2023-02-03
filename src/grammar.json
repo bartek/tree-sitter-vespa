@@ -205,6 +205,81 @@
         }
       ]
     },
+    "rank_profile": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "rank-profile"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "inherits"
+                },
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "identifier"
+                    },
+                    {
+                      "type": "REPEAT",
+                      "content": {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "STRING",
+                            "value": ","
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "identifier"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "block"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        }
+      ]
+    },
     "identifier": {
       "type": "TOKEN",
       "content": {
@@ -258,6 +333,19 @@
           }
         ]
       }
+    },
+    "_expression": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "int_literal"
+        }
+      ]
     },
     "field_type": {
       "type": "CHOICE",
@@ -485,7 +573,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "int_lit"
+                  "name": "int_literal"
                 },
                 {
                   "type": "STRING",
@@ -736,13 +824,8 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "identifier"
-              },
-              "named": true,
-              "value": "argument"
+              "type": "SYMBOL",
+              "name": "_expression"
             },
             {
               "type": "REPEAT",
@@ -754,13 +837,8 @@
                     "value": "|"
                   },
                   {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "identifier"
-                    },
-                    "named": true,
-                    "value": "argument"
+                    "type": "SYMBOL",
+                    "name": "_expression"
                   }
                 ]
               }
@@ -847,19 +925,23 @@
         },
         {
           "type": "SYMBOL",
-          "name": "summary_declaration"
-        },
-        {
-          "type": "SYMBOL",
           "name": "element"
         },
         {
           "type": "SYMBOL",
           "name": "document_summary"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "summary_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "rank_profile"
         }
       ]
     },
-    "int_lit": {
+    "int_literal": {
       "type": "TOKEN",
       "content": {
         "type": "SEQ",

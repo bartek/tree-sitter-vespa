@@ -55,10 +55,25 @@ module.exports = grammar({
         field('body', optional($.block)),
     ),
 
+    rank_profile: $ => seq(
+        'rank-profile',
+        field('name', $.identifier),
+        optional(seq(
+            'inherits',
+            commaSep($.identifier),
+        )),
+        field('body', optional($.block)),
+    ),
+
     identifier: $ => token(seq(
       letter,
       repeat(choice(letter, unicodeDigit))
     )),
+
+    _expression: $ => choice(
+        $.identifier,
+        $.int_literal,
+    ),
 
     field_type: $ => choice(
         $.array_type,
@@ -119,7 +134,7 @@ module.exports = grammar({
           '{}',
           seq(
             '[',
-            $.int_lit,
+            $.int_literal,
             ']',
           ),
         ),
@@ -172,7 +187,7 @@ module.exports = grammar({
     ),
 
     element_arguments: $ => seq(
-      pipeSep(alias($.identifier, $.argument)),
+      pipeSep($._expression),
     ),
 
     _statement_list: $ => choice(
@@ -188,12 +203,15 @@ module.exports = grammar({
     _statement: $ => choice(
         $.block,
         $.field_declaration,
-        $.summary_declaration,
         $.element,
+        // Document Summary
         $.document_summary,
+        $.summary_declaration,
+        // Rank Profile
+        $.rank_profile,
     ),
 
-    int_lit: $ => token(seq(
+    int_literal: $ => token(seq(
       /[1-9]/,
       repeat(unicodeDigit),
     )),
