@@ -1,7 +1,7 @@
 const 
   unicodeLetter = /\p{L}/,
   unicodeDigit = /[0-9]/,
-  letter = choice(unicodeLetter, '_', '-'),
+  letter = choice(unicodeLetter, '_', '-', '.'),
   newline = '\n',
   terminator = choice(newline, ';')
 
@@ -34,6 +34,12 @@ module.exports = grammar({
         field('name', $.identifier),
         'type',
         $.field_type,
+        $.field_body,
+    ),
+
+    struct_field: $ => seq(
+        'struct-field',
+        field('name', $.identifier),
         $.field_body,
     ),
 
@@ -174,7 +180,7 @@ module.exports = grammar({
 
     element: $ => seq(
       field('name', alias($.identifier, $.element_name)),
-      optional(field('argument', alias($.identifier, $.argument))),
+      optional(field('argument', $.identifier)),
       choice(
         ':',
         seq(
@@ -207,6 +213,7 @@ module.exports = grammar({
         // Document Summary
         $.document_summary,
         $.summary_declaration,
+        $.struct_field,
         // Rank Profile
         $.rank_profile,
     ),

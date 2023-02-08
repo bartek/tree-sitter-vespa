@@ -122,6 +122,27 @@
         }
       ]
     },
+    "struct_field": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "struct-field"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "field_body"
+        }
+      ]
+    },
     "summary_declaration": {
       "type": "SEQ",
       "members": [
@@ -299,6 +320,10 @@
               {
                 "type": "STRING",
                 "value": "-"
+              },
+              {
+                "type": "STRING",
+                "value": "."
               }
             ]
           },
@@ -321,6 +346,10 @@
                     {
                       "type": "STRING",
                       "value": "-"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "."
                     }
                   ]
                 },
@@ -751,13 +780,8 @@
               "type": "FIELD",
               "name": "argument",
               "content": {
-                "type": "ALIAS",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "identifier"
-                },
-                "named": true,
-                "value": "argument"
+                "type": "SYMBOL",
+                "name": "identifier"
               }
             },
             {
@@ -934,6 +958,10 @@
         {
           "type": "SYMBOL",
           "name": "summary_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "struct_field"
         },
         {
           "type": "SYMBOL",

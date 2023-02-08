@@ -20,17 +20,17 @@ schema testdoc {
         (block
             (element
             (element_name)
-            (argument)
+            (identifier)
             (element_arguments
                 (int_literal)))
             (element
             (element_name)
-            (argument)
+            (identifier)
             (element_arguments
                 (int_literal)))
             (element
             (element_name)
-            (argument)
+            (identifier)
             (element_arguments
                 (int_literal))))))))
 

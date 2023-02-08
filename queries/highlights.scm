@@ -13,7 +13,9 @@
   (int_literal)
 ] @number
 
-(identifier) @string
+[
+  (identifier)
+] @string
 
 [ "|" ":" ] @operator
 (comment) @comment

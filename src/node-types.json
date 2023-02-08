@@ -43,6 +43,10 @@
           "named": true
         },
         {
+          "type": "struct_field",
+          "named": true
+        },
+        {
           "type": "summary_declaration",
           "named": true
         }
@@ -94,7 +98,7 @@
         "required": false,
         "types": [
           {
-            "type": "argument",
+            "type": "identifier",
             "named": true
           }
         ]
@@ -142,6 +146,10 @@
         },
         {
           "type": "rank_profile",
+          "named": true
+        },
+        {
+          "type": "struct_field",
           "named": true
         },
         {
@@ -364,6 +372,32 @@
     }
   },
   {
+    "type": "struct_field",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "field_body",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "summary_declaration",
     "named": true,
     "fields": {
@@ -492,10 +526,6 @@
     "named": false
   },
   {
-    "type": "argument",
-    "named": true
-  },
-  {
     "type": "array",
     "named": false
   },
@@ -593,6 +623,10 @@
   },
   {
     "type": "string",
+    "named": false
+  },
+  {
+    "type": "struct-field",
     "named": false
   },
   {

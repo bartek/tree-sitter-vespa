@@ -52,7 +52,7 @@ schema testdoc {
                 (identifier)))
             (element
               (element_name)
-              (argument)
+              (identifier)
               (element_arguments
                 (identifier))))))))
 
@@ -81,14 +81,14 @@ schema testdoc {
         (field_body
           (element
             (element_name)
-            (argument)
+            (identifier)
             (element
               (element_name)
               (element_arguments
                 (identifier))))
           (element
             (element_name)
-            (argument)
+            (identifier)
             (element
               (element_name)
               (element_arguments
@@ -127,3 +127,37 @@ schema testdoc {
              (tensor_dimension
                (dimension_name))))
          (field_body)))))
+
+============
+Struct Field
+============
+
+schema testdoc {
+    field outer type map<string, string> {
+        struct-field inner1 { indexing: attribute }
+        struct-field inner2 {}
+    }
+}
+---
+
+(schema_file
+  (schema_declaration
+    (identifier)
+    (block
+      (field_declaration
+        (identifier)
+        (field_type
+          (map_type
+            (identifier)
+            (identifier)))
+        (field_body
+          (element
+            (element_name)
+            (identifier)
+            (element
+              (element_name)
+              (element_arguments
+                (identifier))))
+          (element
+            (element_name)
+            (identifier)))))))
